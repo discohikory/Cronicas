@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Crónicas del Staff: la historia cinematográfica de Discohikorybrs, de LatamMC a SkyLith Network.">
+<title>Crónicas del Staff — Discohikorybrs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+:root{--text:#f5f7ff;--muted:#9da8c5}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:#020308;color:var(--text);font-family:Inter,sans-serif;overflow-x:hidden}
+#progress{position:fixed;top:0;left:0;height:4px;width:100%;z-index:200;background:linear-gradient(90deg,#8b5cf6,#22d3ee);transform-origin:left;transform:scaleX(0)}
+#dots{position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:150;display:flex;flex-direction:column;gap:10px}
+#dots a{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.25);transition:all .3s}
+#dots a.on{background:#22d3ee;box-shadow:0 0 10px #22d3ee;transform:scale(1.3)}
+#soundBtn{position:fixed;left:14px;bottom:14px;z-index:200;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(10,10,25,.8);color:#fff;font-size:18px;cursor:pointer}
+#intro{position:fixed;inset:0;z-index:300;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:opacity .8s;text-align:center;padding:20px}
+#intro.gone{opacity:0;pointer-events:none}
+#intro .t1{font-size:12px;letter-spacing:4px;color:var(--muted);font-family:'Press Start 2P',monospace}
+#intro .t2{font:700 clamp(34px,7vw,72px) 'Space Grotesk';background:linear-gradient(90deg,#fff,#bca8ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+#intro .t3{color:var(--muted);min-height:24px;font-family:monospace}
+.btn{padding:13px 30px;border:2px solid #8b5cf6;border-radius:4px;background:linear-gradient(#9d6bff,#6d28d9);color:#fff;font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 0 30px rgba(139,92,246,.4)}
+.btn:hover{filter:brightness(1.15)}
+.ch{min-height:100vh;position:relative;display:grid;place-items:center;overflow:hidden;padding:60px 20px}
+.scene{position:absolute;inset:-6%;z-index:0}
+.panel{position:relative;z-index:2;max-width:620px;text-align:center;background:rgba(2,3,10,.55);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:18px;padding:34px 30px;opacity:0;transform:translateY(40px);transition:all .9s ease}
+.panel.visible{opacity:1;transform:none}
+.panel .year{font-family:'Press Start 2P',monospace;font-size:11px;color:#22d3ee;letter-spacing:2px}
+.panel h2{font:700 clamp(26px,4vw,40px) 'Space Grotesk';margin:12px 0}
+.panel p{color:#d6dbee;font-size:16px}
+.panel .lore{font-style:italic;color:var(--muted);font-size:14px;border-left:3px solid #8b5cf6;padding-left:12px;text-align:left;margin-top:14px}
+.vig{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse at center,transparent 45%,rgba(0,0,0,.65) 100%)}
+.mote{position:absolute;border-radius:50%;pointer-events:none;animation:floatUp linear infinite}
+@keyframes floatUp{from{transform:translateY(20px);opacity:0}15%{opacity:.9}85%{opacity:.9}to{transform:translateY(-110vh);opacity:0}}
+.s1{background:radial-gradient(circle at 50% 120%,#1e1b4b,#020308 70%)}
+.portal{position:absolute;left:50%;top:50%;width:220px;height:220px;transform:translate(-50%,-50%);border-radius:50%;border:6px solid #22d3ee;box-shadow:0 0 60px #22d3ee,inset 0 0 60px rgba(34,211,238,.5);animation:spin 24s linear infinite}
+.portal::before{content:"";position:absolute;inset:18px;border-radius:50%;border:3px dashed #a5f3fc;animation:spinInner 12s linear infinite reverse}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes spinInner{to{transform:rotate(360deg)}}
+.s2{background:linear-gradient(#0b1026 0%,#3b2f63 45%,#c2613b 70%,#1a0f2e 100%)}
+.sun{position:absolute;left:50%;top:52%;width:130px;height:130px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,#fde68a,#f59e0b);box-shadow:0 0 80px #f59e0b}
+.gates{position:absolute;bottom:0;left:0;right:0;height:34%;background:linear-gradient(#2a2140,#141021);clip-path:polygon(0 100%,0 35%,8% 35%,8% 15%,14% 15%,14% 35%,30% 35%,30% 10%,34% 10%,34% 35%,66% 35%,66% 10%,70% 10%,70% 35%,86% 35%,86% 15%,92% 15%,92% 35%,100% 35%,100% 100%)}
+.s3{background:linear-gradient(#1a0505 0%,#450a0a 55%,#0b0b14 100%)}
+.lava{position:absolute;bottom:0;left:0;right:0;height:22%;background:linear-gradient(#f97316,#b91c1c);filter:blur(1px);animation:lava 3s ease-in-out infinite alternate}
+@keyframes lava{to{transform:translateY(-8px)}}
+.anvil{position:absolute;left:50%;bottom:24%;width:90px;height:46px;transform:translateX(-50%);background:linear-gradient(#3f3f46,#18181b);clip-path:polygon(0 30%,20% 30%,20% 0,80% 0,80% 30%,100% 30%,100% 100%,0 100%)}
+.s4{background:linear-gradient(#041e2e 0%,#075985 60%,#02131d 100%)}
+.bub{position:absolute;border-radius:50%;border:2px solid rgba(165,243,252,.5);animation:floatUp linear infinite}
+.turtle{position:absolute;left:12%;bottom:20%;width:110px;height:60px;background:radial-gradient(ellipse,#34d399,#065f46);border-radius:50% 50% 45% 45%;animation:swim 7s ease-in-out infinite}
+@keyframes swim{0%,100%{transform:translate(0,0)}50%{transform:translate(60px,-24px)}}
+.s5{background:radial-gradient(circle at 50% 0%,#3b0764,#0b0b1c 75%)}
+.eye{position:absolute;width:34px;height:10px;background:#e9d5ff;box-shadow:0 0 18px #a855f7;border-radius:4px;animation:blink 5s infinite}
+@keyframes blink{0%,93%,100%{opacity:1}96%{opacity:0}}
+.isle{position:absolute;left:50%;bottom:6%;width:280px;height:60px;transform:translateX(-50%);background:linear-gradient(#4c1d95,#1e1b4b);clip-path:polygon(10% 0,90% 0,78% 100%,22% 100%);opacity:.9}
+.s6{background:linear-gradient(#082f49 0%,#0c4a6e 45%,#f59e0b 78%,#451a03 100%)}
+.cloud{position:absolute;background:rgba(255,255,255,.85);border-radius:30px;animation:drift linear infinite}
+@keyframes drift{from{transform:translateX(-20vw)}to{transform:translateX(120vw)}}
+.finale{background:#020308;text-align:center}
+.finale a.btn{text-decoration:none;display:inline-block;margin:8px}
+footer{text-align:center;padding:30px 20px;color:var(--muted);font-size:12px}
+footer strong{color:#fff}
+.projects{max-width:900px;margin:0 auto;padding:0 20px 10px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pcard{border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px;background:rgba(15,20,35,.5)}
+.pcard h3{margin:0 0 4px;font-size:15px}
+.pcard p{margin:0 0 8px;font-size:12px;color:var(--muted)}
+.pcard a{color:#67e8f9;font-size:13px;font-weight:700;text-decoration:none}
+@media(max-width:700px){.grid2{grid-template-columns:1fr}#dots{display:none}}
+@media (prefers-reduced-motion:reduce){.portal,.portal::before,.lava,.turtle,.mote,.cloud{animation:none !important}.panel{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<nav id="dots" aria-hidden="true"></nav>
+<button id="soundBtn" title="Ambiente">🔇</button>
+<div id="intro">
+  <div class="t1">DISCOHIKORYBRS PRESENTA</div>
+  <div class="t2">CRÓNICAS DEL STAFF</div>
+  <div class="t3" id="introType"></div>
+  <button class="btn" id="startBtn">Comenzar ▶</button>
+</div>
+<main>
+<section class="ch" id="c0"><div class="scene s1"><div class="portal"></div><div class="motes" data-c="#a5f3fc" data-n="14"></div></div><div class="vig"></div>
+  <div class="panel"><div class="year">PRÓLOGO · EL VACÍO</div><h2>Antes del rango, hubo un jugador</h2><p>Todo Staff empieza siendo nadie: un nick más entre miles. Esta es la historia de cómo ese nick se volvió un nombre que los servidores recuerdan.</p><p class="lore">Desliza para viajar en el tiempo. 🔊 Activa el ambiente.</p></div></section>
+<section class="ch" id="c1"><div class="scene s2"><div class="sun"></div><div class="gates"></div><div class="motes" data-c="#fdba74" data-n="10"></div></div><div class="vig"></div>
+  <div class="panel"><div class="year">2021 · LATAMMC</div><h2>De Soporte a CEO</h2><p>Entró como Soporte, ascendió a Moderador en semanas y terminó liderando el proyecto como CEO. Ahí aprendió lo esencial: escuchar, decidir y sostener a un equipo.</p><p class="lore">Lección I — El rango se gana sirviendo, no pidiéndolo.</p></div></section>
+<section class="ch" id="c2"><div class="scene s3"><div class="lava"></div><div class="anvil"></div><div class="motes" data-c="#fca5a5" data-n="14"></div></div><div class="vig"></div>
+  <div class="panel"><div class="year">2022 — 2024 · LA FORJA</div><h2>Años de Developer</h2><p>Lejos de los reflectores, se forjó en lo técnico: plugins, configuraciones, errores a las 3 a.m. El Staff que entiende la máquina manda mejor.</p><p class="lore">Lección II — Quien sabe cómo funciona, sabe cómo cuidarlo.</p></div></section>
+<section class="ch" id="c3"><div class="scene s4"><div class="turtle"></div><div class="motes" data-c="#a5f3fc" data-n="12"></div></div><div class="vig"></div>
+  <div class="panel"><div class="year">2025 · EL RETORNO</div><h2>SpaceMain · ZX · Turtle</h2><p>Volvió a la arena con SpaceMain SMP, [ZX] Studios y TurtleNetwork: gestión, desarrollo y moderación al tiempo. Ritmo de Staff completo.</p><p class="lore">Lección III — La constancia pesa más que el talento.</p></div></section>
+<section class="ch" id="c4"><div class="scene s5"><div class="eye" style="left:18%;top:30%"></div><div class="eye" style="left:72%;top:22%;animation-delay:1.4s"></div><div class="eye" style="left:55%;top:55%;animation-delay:2.6s"></div><div class="isle"></div><div class="motes" data-c="#d8b4fe" data-n="14"></div></div><div class="vig"></div>
+  <div class="panel"><div class="year">2025 — 2026 · VOIDCRAFT</div><h2>Founder + Lead Developer</h2><p>Fundó y lideró su propio servidor anárquico. Tomar decisiones finales, sostener una visión y responder por todo: la escuela más dura.</p><p class="lore">Lección IV — Liderar es responder por todo, incluso lo que no hiciste.</p></div></section>
+<section class="ch" id="c5"><div class="scene s6"><div class="cloud" style="top:18%;width:180px;height:44px;animation-duration:46s"></div><div class="cloud" style="top:34%;width:120px;height:32px;animation-duration:64s;animation-delay:-20s"></div><div class="cloud" style="top:10%;width:230px;height:52px;animation-duration:80s;animation-delay:-50s"></div><div class="motes" data-c="#fde68a" data-n="10"></div></div><div class="vig"></div>
+  <div class="panel"><div class="year">2026 · SKYLITH · PRESENTE</div><h2>Moderador activo</h2><p>Hoy modera SkyLith Network y sigue construyendo herramientas para la comunidad: del juego al código, del código a la gente.</p><p class="lore">Lección V — El verdadero progreso es la huella que dejas.</p></div></section>
+<section class="ch finale" id="c6">
+  <div class="panel visible" style="opacity:1;transform:none">
+    <div class="year">FIN · ¿Y AHORA?</div>
+    <h2>Tu servidor puede ser el próximo capítulo</h2>
+    <p>¿Trabajamos juntos?</p>
+    <a class="btn" href="https://discohikory.github.io/Portafolio/#contacto">Hablemos ↗</a>
+    <a class="btn" style="background:none;border:1px solid rgba(255,255,255,.25);box-shadow:none" href="https://discohikory.github.io/Portafolio/">Ver portafolio</a>
+  </div>
+  <div class="projects" style="position:relative;z-index:2">
+    <div class="grid2">
+      <div class="pcard"><h3>🧰 Staff Toolkit</h3><p>Sanciones y tickets.</p><a href="https://discohikory.github.io/Staff-Toolkit/">Abrir ↗</a></div>
+      <div class="pcard"><h3>📖 Wiki de Comandos</h3><p>Comandos y rangos.</p><a href="https://discohikory.github.io/Wiki-Comandos/">Abrir ↗</a></div>
+      <div class="pcard"><h3>❓ Quiz Staff</h3><p>250 preguntas por rangos.</p><a href="https://discohikory.github.io/Quiz-Staff/">Jugar ↗</a></div>
+      <div class="pcard"><h3>📡 Status en vivo</h3><p>Monitor Java y Bedrock.</p><a href="https://discohikory.github.io/Server-Status/">Abrir ↗</a></div>
+      <div class="pcard"><h3>🔮 Guía de Encantamientos</h3><p>Sets y choques.</p><a href="https://discohikory.github.io/Guia-Encantamientos/">Abrir ↗</a></div>
+    </div>
+  </div>
+  <footer>© 2026 Daniel Esteban Vera Fernandez · <strong>Discohikorybrs</strong> · Todos los derechos reservados.<br><small>Crónicas del Staff · Hecho con ⛏️</small><div class="visits" style="margin-top:10px;font-size:13px;color:var(--muted)">👁 <span id="visitCount">…</span> visitas</div></footer>
+</section>
+</main>
+<script>
+// motas por escena
+document.querySelectorAll('.motes').forEach(box=>{
+  const c=box.dataset.c||'#fff',n=Number(box.dataset.n||10);
+  for(let i=0;i<n;i++){
+    const s=document.createElement('span');s.className='mote';
+    const z=3+Math.random()*5;
+    s.style.left=(Math.random()*100)+'%';s.style.bottom='-10px';
+    s.style.width=z+'px';s.style.height=z+'px';s.style.background=c;
+    s.style.boxShadow=`0 0 8px ${c}`;
+    s.style.animationDuration=(9+Math.random()*12)+'s';
+    s.style.animationDelay=(-Math.random()*16)+'s';
+    box.appendChild(s);
+  }
+});
+// burbujas escena océano
+(function(){
+  const s4=document.querySelector('.s4');
+  for(let i=0;i<8;i++){
+    const b=document.createElement('span');b.className='bub';
+    const z=6+Math.random()*14;
+    b.style.left=(Math.random()*100)+'%';b.style.bottom='-20px';
+    b.style.width=z+'px';b.style.height=z+'px';
+    b.style.animationDuration=(7+Math.random()*8)+'s';
+    b.style.animationDelay=(-Math.random()*10)+'s';
+    s4.appendChild(b);
+  }
+})();
+// intro typewriter + inicio
+const introTxt="Una historia real contada en 6 capítulos…";
+let ti=0;
+(function typeIntro(){
+  const el=document.getElementById('introType');
+  if(ti<=introTxt.length){el.textContent=introTxt.slice(0,ti);ti++;setTimeout(typeIntro,45)}
+})();
+document.getElementById('startBtn').addEventListener('click',()=>{
+  document.getElementById('intro').classList.add('gone');
+  document.getElementById('c0').scrollIntoView({behavior:'smooth'});
+  startAmbience();
+});
+// reveals + progreso + dots
+const dots=document.getElementById('dots');
+const secs=[...document.querySelectorAll('.ch')];
+secs.forEach((s,i)=>{const a=document.createElement('a');a.href='#c'+i;a.addEventListener('click',e=>{e.preventDefault();s.scrollIntoView({behavior:'smooth'})});dots.appendChild(a)});
+const io=new IntersectionObserver(es=>es.forEach(en=>{
+  if(!en.isIntersecting)return;
+  en.target.querySelectorAll('.panel').forEach(p=>p.classList.add('visible'));
+  const i=secs.indexOf(en.target);
+  dots.querySelectorAll('a').forEach((a,k)=>a.classList.toggle('on',k===i));
+}),{threshold:.35});
+secs.forEach(s=>io.observe(s));
+addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  document.getElementById('progress').style.transform=`scaleX(${h.scrollTop/(h.scrollHeight-h.clientHeight)})`;
+},{passive:true});
+// parallax suave
+let tick=false;
+addEventListener('scroll',()=>{
+  if(tick||(matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches))return;
+  tick=true;
+  requestAnimationFrame(()=>{
+    secs.forEach(s=>{
+      const r=s.getBoundingClientRect();
+      const sc=s.querySelector('.scene');
+      if(sc&&r.bottom>0&&r.top<innerHeight)sc.style.transform=`translateY(${r.top*-0.08}px)`;
+    });
+    tick=false;
+  });
+},{passive:true});
+// ambiente sonoro (pad generativo)
+let AC=null,ambOn=false,ambNodes=null;
+function startAmbience(){
+  if(ambOn||(matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches))return;
+  try{
+    AC=AC||new (window.AudioContext||window.webkitAudioContext)();
+    const g=AC.createGain();g.gain.value=0.0;g.connect(AC.destination);
+    const o1=AC.createOscillator(),o2=AC.createOscillator();
+    o1.type='sine';o1.frequency.value=55;o2.type='sine';o2.frequency.value=82.5;
+    const lfo=AC.createOscillator(),lg=AC.createGain();
+    lfo.frequency.value=0.07;lg.gain.value=0.02;lfo.connect(lg);lg.connect(g.gain);
+    o1.connect(g);o2.connect(g);o1.start();o2.start();lfo.start();
+    g.gain.linearRampToValueAtTime(0.05,AC.currentTime+3);
+    ambNodes={g};ambOn=true;
+    document.getElementById('soundBtn').textContent='🔊';
+  }catch(e){}
+}
+document.getElementById('soundBtn').addEventListener('click',()=>{
+  if(!ambNodes){startAmbience();return}
+  ambOn=!ambOn;
+  ambNodes.g.gain.linearRampToValueAtTime(ambOn?0.05:0.0,AC.currentTime+1);
+  document.getElementById('soundBtn').textContent=ambOn?'🔊':'🔇';
+});
+// visitas
+(function(){
+  var el=document.getElementById('visitCount');
+  if(!el)return;
+  function fmt(n){n=Number(n)||0;return n>=1000?(n/1000).toFixed(1).replace('.',',').replace(',0','')+' mil':String(n)}
+  fetch('https://api.jsonbin.io/v3/b/6aac6a86ffd5d1605313c161/latest',{headers:{'X-Access-Key':'$2a$10$XbVd43wzBhlIfE1632782ePKNz5e/MaX25U3NJ5JRIBKtJt0ILnXC'}})
+  .then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){
+    var v=(j.record&&j.record.visits)||{};
+    v.cronicas=(v.cronicas||0)+1;
+    el.textContent=fmt(v.cronicas);
+    fetch('https://api.jsonbin.io/v3/b/6aac6a86ffd5d1605313c161',{method:'PUT',headers:{'Content-Type':'application/json','X-Access-Key':'$2a$10$XbVd43wzBhlIfE1632782ePKNz5e/MaX25U3NJ5JRIBKtJt0ILnXC','X-Bin-Versioning':'false'},body:JSON.stringify({visits:v})}).catch(function(){});
+  }).catch(function(){el.textContent='—'});
+})();
+</script>
+</body>
+</html>
